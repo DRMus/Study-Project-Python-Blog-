@@ -7,7 +7,7 @@ query = input('Введите город: ')
 host = 'https://geocode-maps.yandex.ru/1.x/'
 
 params_query_get = {
-    'apikey': '1a78dda4-1157-4234-8cfa-8624cb129414',
+    'apikey': '',
     'geocode': query,
     'format': 'json'
 }
