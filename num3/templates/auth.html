@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <form class="box" method="post" novalidate>
+		{{ signup.hidden_tag() }}
+		{{ log.hidden_tag() }}
+
+		<p>{{ log.submit(value="Вход") }}</p>
+		<p>{{ signup.submit(value="Регистрация") }}</p>
+	</form>
+{% endblock %}
