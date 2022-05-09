@@ -1,0 +1,19 @@
+{% extends "content.html" %}
+
+{% block content %}
+
+    <div class="content">
+        <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <p>{{form.search(class="query_map", placeholder="Введите город")}}</p>
+            <p>{{form.submit(class="sub_map")}}</p>
+            {% if err %}
+                <div id="server_info">
+                    <p>Город не найден</p>
+                </div>
+            {% endif %}
+        </form>
+        <img src="{{ url_for('static', filename='img/map.png') }}" alt="" class="search_map">
+    </div>
+
+{% endblock %}

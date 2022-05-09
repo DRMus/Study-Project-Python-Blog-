@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <div class="box">
+        <form method="POST" novalidate enctype=multipart/form-data>
+            {{ form.hidden_tag() }}
+            <h1>Регистрация</h1>
+            <p>{{ form.firstname(placeholder="Имя") }}</p>
+            <p>{{ form.lastname(placeholder="Фамилия") }}</p>
+            <p>{{ form.age(placeholder="Возраст") }}</p>
+            <p>{{ form.email(placeholder="E-mail") }}</p>
+            <p>{{ form.position(placeholder="Должность") }}</p>
+            <p>{{ form.password(placeholder="Пароль") }}</p>
+            <p>{{ form.file() }}</p>
+            <p>{{ form.submit(value="Подтвердить") }}</p>
+        </form>
+    </div>
+{% endblock %}

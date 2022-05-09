@@ -2,10 +2,7 @@
 
 {% block content %}
     <form class="box" method="post" novalidate>
-		{{ signup.hidden_tag() }}
-		{{ log.hidden_tag() }}
-
-		<p>{{ log.submit(value="Вход") }}</p>
-		<p>{{ signup.submit(value="Регистрация") }}</p>
+		<a href="/login/">Вход</a>
+		<a href="/signup/">Регистрация</a>
 	</form>
 {% endblock %}

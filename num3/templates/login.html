@@ -2,12 +2,17 @@
 
 {% block content %}
     <div class="box">
-        <form action="" method="POST" novalidate>
+        <form method="POST" novalidate>
             {{ form.hidden_tag() }}
-            <h1>Log in</h1>
-            <p>{{ form.username(placeholder="Username") }}</p>
-            <p>{{ form.password(placeholder="Password") }}</p>
+            <h1>Вход</h1>
+            <p>{{ form.email(placeholder="E-mail") }}</p>
+            <p>{{ form.password(placeholder="Пароль") }}</p>
             <p>{{ form.submit(value="Подтвердить") }}</p>
+            {% if err %}
+                <div id="server_info">
+                    <p>Неверный логин или пароль</p>
+                </div>
+            {% endif %}
         </form>
     </div>
 {% endblock %}

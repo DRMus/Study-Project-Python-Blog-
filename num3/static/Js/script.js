@@ -7,5 +7,5 @@ $(function(){
         });
         return false;
     })
-    console.log('Ok')
+    console.log('logout')
 })
