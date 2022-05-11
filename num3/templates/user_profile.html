@@ -1,0 +1,49 @@
+{% extends "content.html" %}
+
+{% block content %}
+    <div class="content user_page">
+            <img src="{{ url_for('static', filename='img/'+user.filename) }}" alt="">
+            <div class="edit">
+                <form method="POST" novalidate>
+                    {{ form.hidden_tag() }}
+                    <div class="inp_str">
+                        {{ form.firstname.label }}
+                        {{ form.firstname(class="edit_input", value=user.firstname) }}
+                    </div>
+                    <div class="inp_str">
+                        {{ form.lastname.label }}
+                        {{ form.lastname(class="edit_input", value=user.lastname) }}
+                    </div>
+                    <div class="inp_str">
+                        {{ form.age.label }}
+                        {{ form.age(class="edit_input", value=user.age) }}
+                    </div>
+                    <div class="inp_str">
+                        {{ form.email.label }}
+                        {{ form.email(class="edit_input", value=user.email) }}
+                    </div>
+                    <div class="inp_str">
+                        {{ form.position.label }}
+                        {{ form.position(class="edit_input", value=user.position) }}
+                    </div>
+                    <div class="inp_str">
+                        {{ form.password.label }}
+                        {{ form.password(class="edit_input") }}
+                    </div>
+                    <div class="inp_str">
+                        {{ form.submit(class="edit_input") }}
+                    </div>
+                    {% if sus == 2 %}
+                        <div id="server_info">
+                            <p>Пользователь не отредактирован</p>
+                        </div>
+                    {% endif %}
+                    {% if sus == 1 %}
+                        <div id="success">
+                            <p>Редакция прошла успешно</p>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+{% endblock %}

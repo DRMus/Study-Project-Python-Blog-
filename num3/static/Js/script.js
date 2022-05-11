@@ -1,11 +1,5 @@
-$(function(){
-    $('#login').on('click', function(e){
-        console.log('Log')
-        e.preventDefault()
-        $.getJSON('/login',
-            function(data){
-        });
-        return false;
-    })
-    console.log('logout')
-})
+function page_count(page){
+    if (page != 'None'){
+        window.location.href = "/users/"+page
+    }
+}

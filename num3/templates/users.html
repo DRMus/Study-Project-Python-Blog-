@@ -1,12 +1,22 @@
 {% extends "content.html" %}
 
 {% block content %}
-    {% for el in users %}
+    {% for el in users.items %}
+        {% if el.donate == 'admin' %}
+        <div class="card admin">
+        {% else %}
         <div class="card">
-            <input type="hidden" value="{{el.id}}">
+            {% endif %}
             <img src="{{url_for('static', filename='img/'+el.filename)}}" alt="Здесь оно есть">
             <h1 class="username">{{ el.firstname }} {{ el.lastname }}</h1>
             <h2 class="age">Возраст: {{ el.age }}</h2>
+            {% if el.id == get_id or donate == 'admin' %}
+                <a href="/users/id{{el.id}}" class="edit_profile">Редактировать</a>
+            {% endif %}
         </div>
     {% endfor %}
+            <div class="paginator">
+                <div class="prev" onclick="page_count({{users.previous_page}})"></div>
+                <div class="next" onclick="page_count({{users.next_page}})"></div>
+            </div>
 {% endblock %}

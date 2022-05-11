@@ -2,10 +2,8 @@ import datetime
 import os
 
 from flask import Flask, url_for, request, render_template, redirect
-from flask_wtf import FlaskForm
 from werkzeug.utils import secure_filename
-from forms.forms import SignUpForm, LoginForm, MapForm
-from wtforms.validators import DataRequired
+from forms.forms import SignUpForm, LoginForm, MapForm, EditUserForm
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from UserLogin import UserLogin
 # noinspection PyUnresolvedReferences
@@ -15,6 +13,7 @@ from data.users import User
 # noinspection PyUnresolvedReferences
 from data import db_session
 from num3.main import Maper
+from paginate_sqlalchemy import SqlalchemyOrmPage
 
 app = Flask(__name__)
 
@@ -85,11 +84,53 @@ def signup():
     return render_template('signup.html', title='Регистрация', form=form)
 
 
-@app.route('/users/', methods=['GET', 'POST'])
+@app.route('/users/')
+@app.route('/users/<int:count>')
 @login_required
-def users_page():
-    users = db_sess.query(User).all()
-    return render_template('users.html', title='Пользователи', users=users)
+def users_page(count=1):
+    users = db_sess.query(User)
+    page = SqlalchemyOrmPage(users, page=count, items_per_page=3)
+    return render_template('users.html', title='Пользователи',
+                           users=page,
+                           cur_us=current_user,
+                           donate=current_user.get_role(),
+                           get_id=int(current_user.get_id()))
+
+
+@app.route('/users/id<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_user_page(id):
+    if int(current_user.get_id()) != id and current_user.get_role() != 'admin':
+        return redirect(url_for('users_page'))
+    user = db_sess.query(User).filter(User.id == id).first()
+    form = EditUserForm()
+
+    if request.method == 'POST':
+        if form.password.data != '':
+            user.set_password(form.password.data)
+        user.firstname = form.firstname.data
+        user.lastname = form.lastname.data
+        user.position = form.position.data
+        user.age = form.age.data
+        user.email = form.email.data
+        try:
+            db_sess.merge(user)
+            db_sess.commit()
+        except RuntimeError:
+            print("Что-то пошло не так")
+            return render_template('user_profile.html',
+                                   title='Пользователь ' + user.firstname,
+                                   user=user,
+                                   form=form, sus=2)
+        return render_template('user_profile.html',
+                               title='Пользователь ' + user.firstname,
+                               user=user,
+                               form=form, sus=1)
+
+    return render_template('user_profile.html',
+                           title='Пользователь ' + user.firstname,
+                           user=user,
+                           form=form, sus=0)
 
 
 @app.route('/map/', methods=['GET', 'POST'])
@@ -111,6 +152,7 @@ def logout():
     logout_user()
     print('выход из аккаунта')
     return redirect(url_for('auth_main'))
+
 
 @app.errorhandler(404)
 def page_not_found(error):

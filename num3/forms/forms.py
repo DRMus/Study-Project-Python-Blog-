@@ -23,3 +23,14 @@ class LoginForm(FlaskForm):
 class MapForm(FlaskForm):
     search = StringField('Город', validators=[DataRequired()])
     submit = SubmitField('Найти')
+
+
+class EditUserForm(FlaskForm):
+    firstname = StringField('Имя')
+    lastname = StringField('Фамилия')
+    position = StringField('Должность')
+    age = IntegerField('Возраст')
+    email = EmailField('Email')
+    file = FileField('Файл')
+    password = PasswordField('Пароль')
+    submit = SubmitField('Редактировать')
