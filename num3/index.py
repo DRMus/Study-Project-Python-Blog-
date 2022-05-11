@@ -11,6 +11,8 @@ from data.news import News
 # noinspection PyUnresolvedReferences
 from data.users import User
 # noinspection PyUnresolvedReferences
+from data.category import Category
+# noinspection PyUnresolvedReferences
 from data import db_session
 from num3.main import Maper
 from paginate_sqlalchemy import SqlalchemyOrmPage
@@ -144,6 +146,23 @@ def maper():
         else:
             return render_template('map.html', title='Карта', form=form, err=True)
     return render_template('map.html', title='Карта', form=form, err=False)
+
+
+@app.route('/news/', methods=['GET', 'POST'])
+@login_required
+def news_page():
+    if request.method == 'POST':
+        title = request.form.get('text-title')
+        content = request.form.get('text-post')
+        file = 'none'
+        if request.form.get('file'):
+            file = request.form.get('file')
+        if content and title:
+            feed = News(title=title, content=content, user_id=current_user.get_id())
+            db_sess.add(feed)
+            db_sess.commit()
+    news = db_sess.query(News).all()
+    return render_template('news.html', title='Новости', news=news)
 
 
 @app.route('/logout/')

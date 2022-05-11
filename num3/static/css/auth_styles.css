@@ -132,3 +132,30 @@ body {
 .error a:hover {
 	background: #ce2514;
 }
+
+.file-signup {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.label-file-signup {
+    display: block;
+	margin: 20px auto;
+	border: 0;
+	background: none;
+	text-align: center;
+	border: 2px solid #3498db;
+	padding: 14px 40px;
+	outline: none;
+	color: white;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+	font-weight: 500;
+	width: 120px;
+}
+
+.label-file-signup:hover {
+	background: #3498db;
+}

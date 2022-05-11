@@ -1,0 +1,28 @@
+{% extends "content.html" %}
+
+{% block content %}
+<div class="content news_page">
+    <form action="" novalidate method="post" enctype=multipart/form-data>
+        <textarea class="text_ar title" name="text-title" placeholder="Заголовок"></textarea>
+        <textarea class="text_ar" name="text-post" placeholder="Текст"></textarea>
+        <div class="btns-to-send">
+            <label for="file" class="label-file-post">Файл</label>
+            <input type="file" name="file" class="file-post">
+            <input type="submit" class="send_post">
+        </div>
+    </form>
+
+    {% for el in news %}
+    <hr>
+    <div class="news-card">
+        <div class="author" onclick="profile({{el.user.id}})">
+            <img src="{{url_for('static', filename='img/'+el.user.filename)}}" alt="AVA" class="avatar">
+            <h1>{{el.user.firstname}}</h1>
+            <h1>{{el.user.lastname}}</h1>
+        </div>
+        <h1>{{el.title}}</h1>
+        <p>{{el.content}}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

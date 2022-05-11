@@ -3,3 +3,7 @@ function page_count(page){
         window.location.href = "/users/"+page
     }
 }
+
+function profile(id){
+    window.location.href = "/users/id"+id
+}
